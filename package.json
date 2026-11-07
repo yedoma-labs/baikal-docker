@@ -14,7 +14,7 @@
   "license": "MIT",
   "devDependencies": {
     "cypress": "^16.2.1",
-    "eslint": "^9.24.0",
+    "eslint": "^10.14.0",
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.9.6",
     "typescript": "^5.8.3",
