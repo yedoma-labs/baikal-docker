@@ -65,6 +65,19 @@ jobs:
       - name: Wait for Baikal to respond
         run: curl --silent --show-error --fail --retry 30 --retry-all-errors --retry-delay 1 -o /dev/null http://localhost/
 
+      - name: Check response headers do not leak versions
+        run: |
+          HEADERS=$(curl --silent --show-error --head http://localhost/)
+          echo "$HEADERS"
+          if echo "$HEADERS" | grep -qi '^x-powered-by:'; then
+            echo "::error::X-Powered-By header is exposed"
+            exit 1
+          fi
+          if echo "$HEADERS" | grep -Ei '^server:.*[0-9]'; then
+            echo "::error::Server header exposes a version"
+            exit 1
+          fi
+
       - name: Run Cypress tests
         run: pnpm run test
         env:
