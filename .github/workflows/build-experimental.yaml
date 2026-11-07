@@ -92,6 +92,7 @@ jobs:
     uses: ./.github/workflows/build-job.yaml
     with:
       dockerfile: nginx.dockerfile
+      platforms: linux/amd64,linux/arm/v7,linux/arm64/v8
       image-version: experimental
       baikal-version: ${{ needs.resolve.outputs.baikal-version }}
       tags: yedomalabs/baikal:experimental-nginx
@@ -103,6 +104,7 @@ jobs:
     uses: ./.github/workflows/build-job.yaml
     with:
       dockerfile: nginx-php8.2.dockerfile
+      platforms: linux/amd64,linux/arm/v7,linux/arm64/v8
       image-version: experimental
       baikal-version: ${{ needs.resolve.outputs.baikal-version }}
       tags: yedomalabs/baikal:experimental-nginx-php8.2
