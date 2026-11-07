@@ -1,6 +1,6 @@
 # Baikal
 
-⚠️ **Forked to get updates faster!** ⚠️ 
+⚠️ **Forked to get updates faster!** ⚠️
 
 [![Latest images](https://github.com/bwiedmann/baikal-docker/actions/workflows/build-latest.yaml/badge.svg)](https://github.com/bwiedmann/baikal-docker/actions/workflows/build-latest.yaml) [![Experimental images](https://github.com/bwiedmann/baikal-docker/actions/workflows/build-experimental.yaml/badge.svg)](https://github.com/bwiedmann/baikal-docker/actions/workflows/build-experimental.yaml) ![Docker Pulls](https://img.shields.io/docker/pulls/bwiedmann/baikal) ![Docker Architectures](https://img.shields.io/badge/arch-amd64%20%7C%20arm32v7%20%7C%20arm64v8%20%7C%20i386-informational)
 
@@ -93,11 +93,13 @@ When adding a Baikal account in macOS **Calendar** or **Contacts** (Internet Acc
 However, macOS requires the full path with `dav.php/principals/username/` format. Use these URLs in the setup dialog:
 
 **For Calendar (CalDAV):**
+
 ```text
 https://yourdomain.tld/dav.php/principals/username/
 ```
 
 **For Contacts (CardDAV):**
+
 ```text
 https://yourdomain.tld/dav.php/principals/username/
 ```
