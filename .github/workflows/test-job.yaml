@@ -35,12 +35,14 @@ jobs:
           ref: ${{ inputs.ref }}
           show-progress: false
 
-      - uses: actions/setup-node@v4
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
         with:
           node-version-file: package.json
 
       - name: Install Cypress dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Build Docker image
         id: build
@@ -55,7 +57,7 @@ jobs:
         run: docker run --rm -dp 80:80 --name ${{ inputs.dockerfile }} baikal-image
 
       - name: Run Cypress tests
-        run: npm run test
+        run: pnpm run test
         env:
           CYPRESS_BAIKAL_VERSION: ${{ steps.parse-release-tag.outputs.BAIKAL_VERSION }}
 
@@ -110,7 +112,7 @@ jobs:
           docker cp ${{ github.workspace }}/cypress/fixtures/mail-test.php baikal:/var/www/baikal/html/
 
       - name: Run Cypress tests incl. MSMTP
-        run: npm run test
+        run: pnpm run test
         env:
           CYPRESS_MSMTP_ENABLED: TRUE
           CYPRESS_BAIKAL_VERSION: ${{ steps.parse-release-tag.outputs.BAIKAL_VERSION }}
