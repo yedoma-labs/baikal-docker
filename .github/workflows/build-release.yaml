@@ -57,6 +57,7 @@ jobs:
     uses: ./.github/workflows/build-job.yaml
     with:
       dockerfile: nginx.dockerfile
+      platforms: linux/amd64,linux/arm/v7,linux/arm64/v8
       image-version: ${{ needs.parse_release_tag.outputs.baikal-version }}
       tags: yedomalabs/baikal:${{ needs.parse_release_tag.outputs.baikal-version }}-nginx
     secrets: inherit
@@ -67,6 +68,7 @@ jobs:
     uses: ./.github/workflows/build-job.yaml
     with:
       dockerfile: nginx-php8.2.dockerfile
+      platforms: linux/amd64,linux/arm/v7,linux/arm64/v8
       image-version: ${{ needs.parse_release_tag.outputs.baikal-version }}
       tags: yedomalabs/baikal:${{ needs.parse_release_tag.outputs.baikal-version }}-nginx-php8.2
     secrets: inherit
@@ -77,6 +79,7 @@ jobs:
     uses: ./.github/workflows/build-job.yaml
     with:
       dockerfile: nginx-php8.4.dockerfile
+      platforms: linux/amd64,linux/arm/v7,linux/arm64/v8
       image-version: ${{ needs.parse_release_tag.outputs.baikal-version }}
       tags: yedomalabs/baikal:${{ needs.parse_release_tag.outputs.baikal-version }}-nginx-php8.4
     secrets: inherit
