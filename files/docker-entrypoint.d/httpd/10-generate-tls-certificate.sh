@@ -13,6 +13,13 @@ if [ -s "$CERT" ] && [ -s "$KEY" ]; then
   exit 0
 fi
 
+# Never overwrite a partially provided certificate: a single mounted file
+# means the mount is incomplete, so stop instead of replacing the other one.
+if [ -e "$CERT" ] || [ -e "$KEY" ]; then
+  echo "$ME: error: found only one of $CERT and $KEY, provide both or neither" >&2
+  exit 1
+fi
+
 echo "$ME: info: generating self-signed certificate in /etc/ssl/private"
 umask 077
 openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -subj "/CN=baikal" -addext "subjectAltName=DNS:localhost" -addext "basicConstraints=critical,CA:FALSE" -keyout "$KEY" -out "$CERT"
