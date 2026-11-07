@@ -27,6 +27,25 @@ permissions:
   contents: read
 
 jobs:
+  # Bake the latest Baikal release into the experimental images
+  resolve:
+    name: Resolve Baikal version
+    runs-on: ubuntu-latest
+    outputs:
+      baikal-version: ${{ steps.release.outputs.BAIKAL_VERSION }}
+    steps:
+      - name: Look up latest release
+        id: release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          REF_NAME=$(gh release view --repo ${{ github.repository }} --json tagName --jq .tagName)
+          if [ -z "$REF_NAME" ]; then
+            echo "::error::Could not determine the latest release"
+            exit 1
+          fi
+          echo BAIKAL_VERSION=${REF_NAME/+*/} >> "$GITHUB_OUTPUT"
+
   test:
     name: ${{ matrix.dockerfile }}
     uses: ./.github/workflows/test-job.yaml
@@ -43,11 +62,12 @@ jobs:
 
   apache:
     name: Apache
-    needs: test
+    needs: [test, resolve]
     uses: ./.github/workflows/build-job.yaml
     with:
       dockerfile: apache.dockerfile
       image-version: experimental
+      baikal-version: ${{ needs.resolve.outputs.baikal-version }}
       tags: |
         yedomalabs/baikal:experimental-apache
         yedomalabs/baikal:experimental
@@ -55,11 +75,12 @@ jobs:
 
   apache_php82:
     name: Apache (PHP 8.2)
-    needs: test
+    needs: [test, resolve]
     uses: ./.github/workflows/build-job.yaml
     with:
       dockerfile: apache-php8.2.dockerfile
       image-version: experimental
+      baikal-version: ${{ needs.resolve.outputs.baikal-version }}
       tags: |
         yedomalabs/baikal:experimental-apache-php8.2
         yedomalabs/baikal:experimental-php8.2
@@ -67,20 +88,22 @@ jobs:
 
   nginx:
     name: Nginx
-    needs: test
+    needs: [test, resolve]
     uses: ./.github/workflows/build-job.yaml
     with:
       dockerfile: nginx.dockerfile
       image-version: experimental
+      baikal-version: ${{ needs.resolve.outputs.baikal-version }}
       tags: yedomalabs/baikal:experimental-nginx
     secrets: inherit
 
   nginx_php82:
     name: Nginx (PHP 8.2)
-    needs: test
+    needs: [test, resolve]
     uses: ./.github/workflows/build-job.yaml
     with:
       dockerfile: nginx-php8.2.dockerfile
       image-version: experimental
+      baikal-version: ${{ needs.resolve.outputs.baikal-version }}
       tags: yedomalabs/baikal:experimental-nginx-php8.2
     secrets: inherit
