@@ -30,6 +30,9 @@ on:
         description: DockerHub password
         required: true
 
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest

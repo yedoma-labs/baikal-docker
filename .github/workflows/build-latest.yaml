@@ -17,6 +17,9 @@ on:
   # Allow manually triggered rebuilds
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   parse_release_tag:
     runs-on: ubuntu-latest

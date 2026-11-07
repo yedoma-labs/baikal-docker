@@ -13,6 +13,9 @@ concurrency:
   group: build-release-images
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   parse_release_tag:
     runs-on: ubuntu-latest
