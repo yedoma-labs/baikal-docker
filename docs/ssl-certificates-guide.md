@@ -16,6 +16,8 @@ For more details on the Traefik configuration, see [Traefik's Docker](https://do
 
 If no certificate is mounted, the container generates a self-signed certificate on its first start. Each deployment gets its own private key, which is never part of the image.
 
+If you mount a certificate, mount both files. If only one of them is present, the container stops with an error instead of replacing the file you provided. On the Nginx variant with `BAIKAL_HTTP_ONLY=true`, no certificate is generated. See the [Configuration Guide](configuration.md) for all options.
+
 If you want to use your own certificates, the recommended appraoch is to hide this container behind your own HTTPS proxy, e.g. with [Traefik's Static Certificates](https://docs.traefik.io/configuration/entrypoints/#static-certificates) or [nginx](https://hub.docker.com/_/nginx/).
 
 This way your other containers can easily be added and since the images are either official Docker images, e.g. [Traefik](https://hub.docker.com/_/traefik/) and [nginx](https://hub.docker.com/_/nginx/), or directly come from the maintainers, you won't have to worry as much about getting updates from a third party - aka me. Security is important for all our internet facing workloads and using the official images makes keeping us safer just that much easier.

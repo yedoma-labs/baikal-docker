@@ -19,7 +19,7 @@ Tags without a version are [weekly re-builds](https://github.com/yedoma-labs/bai
 
 I follow the same version naming scheme as [Baikal](http://sabre.io/baikal/) themselves.
 
-The following tags support multiple architectures, e.g. `amd64`, `arm32v7`, `arm64v8` and `i386`.
+The following tags support multiple architectures, e.g. `amd64`, `arm32v7`, `arm64v8` and `i386`. The Nginx variants do not support `i386`, see the [Configuration Guide](https://github.com/yedoma-labs/baikal-docker/blob/master/docs/configuration.md#architectures).
 
 - [`0.11.1`, `0.11.1-apache`](https://github.com/yedoma-labs/baikal-docker/blob/0.11.1+hafix/apache.dockerfile)
 - [`0.11.1-apache-php8.2`, `0.11.1-php8.2`](https://github.com/yedoma-labs/baikal-docker/blob/0.11.1+hafix/apache-php8.2.dockerfile)
@@ -112,6 +112,7 @@ If you use the Baikal Web Admin's suggested URLs directly (e.g., `/dav.php/calen
 
 You can find more installation and configuration guides here:
 
+- [Configuration Guide](https://github.com/yedoma-labs/baikal-docker/blob/master/docs/configuration.md): environment variables, volumes, reverse proxy
 - [Nginx / PHP 8.4 source build and upgrade guide](docs/nginx-php84-upgrade.md)
 - [Email Guide](https://github.com/yedoma-labs/baikal-docker/blob/master/docs/email-guide.md)
 - [Home Assistant Fix](https://github.com/yedoma-labs/baikal-docker/blob/master/docs/home-assistant-fix.md)
