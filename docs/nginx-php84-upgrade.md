@@ -49,6 +49,12 @@ Back up an external database separately if applicable. Keep the old image and
 Compose configuration for rollback. Do not run `docker compose down -v`, which
 removes named volumes.
 
+By default the image serves HTTP on port 80 and HTTPS on port 443 with the certificate
+in `/etc/nginx/ssl`, which you can mount as a volume. To serve plain HTTP only, for
+example when TLS is terminated by a reverse proxy such as Traefik in Dokploy with
+Cloudflare, set `BAIKAL_HTTP_ONLY=true`. Make sure the proxy sends `X-Forwarded-Proto`,
+otherwise CalDAV/CardDAV well-known redirects use `http://`.
+
 The legacy `APPLY_HOME_ASSISTANT_FIX=true` option is not supported by this new
 variant: its bundled patch targets an older sabre/dav release. Remove that option
 before starting the new image and verify any Home Assistant integration separately.
