@@ -21,10 +21,15 @@ I follow the same version naming scheme as [Baikal](http://sabre.io/baikal/) the
 
 The following tags support multiple architectures, e.g. `amd64`, `arm32v7`, `arm64v8` and `i386`. The Nginx variants do not support `i386`, see the [Configuration Guide](https://github.com/yedoma-labs/baikal-docker/blob/master/docs/configuration.md#architectures).
 
-- [`0.11.1`, `0.11.1-apache`](https://github.com/yedoma-labs/baikal-docker/blob/0.11.1+hafix/apache.dockerfile)
-- [`0.11.1-apache-php8.2`, `0.11.1-php8.2`](https://github.com/yedoma-labs/baikal-docker/blob/0.11.1+hafix/apache-php8.2.dockerfile)
-- [`0.11.1-nginx`](https://github.com/yedoma-labs/baikal-docker/blob/0.11.1+hafix/nginx.dockerfile)
-- [`0.11.1-nginx-php8.2`](https://github.com/yedoma-labs/baikal-docker/blob/0.11.1+hafix/nginx-php8.2.dockerfile)
+- [`0.13.0`, `0.13.0-apache`](https://github.com/yedoma-labs/baikal-docker/blob/0.13.0/apache.dockerfile)
+- [`0.13.0-apache-php8.2`, `0.13.0-php8.2`](https://github.com/yedoma-labs/baikal-docker/blob/0.13.0/apache-php8.2.dockerfile)
+- [`0.13.0-nginx`](https://github.com/yedoma-labs/baikal-docker/blob/0.13.0/nginx.dockerfile)
+- [`0.13.0-nginx-php8.2`](https://github.com/yedoma-labs/baikal-docker/blob/0.13.0/nginx-php8.2.dockerfile)
+- [`0.13.0-nginx-php8.4`](https://github.com/yedoma-labs/baikal-docker/blob/0.13.0/nginx-php8.4.dockerfile)
+- [`0.11.1`, `0.11.1-apache`](https://github.com/yedoma-labs/baikal-docker/blob/0.11.1/apache.dockerfile)
+- [`0.11.1-apache-php8.2`, `0.11.1-php8.2`](https://github.com/yedoma-labs/baikal-docker/blob/0.11.1/apache-php8.2.dockerfile)
+- [`0.11.1-nginx`](https://github.com/yedoma-labs/baikal-docker/blob/0.11.1/nginx.dockerfile)
+- [`0.11.1-nginx-php8.2`](https://github.com/yedoma-labs/baikal-docker/blob/0.11.1/nginx-php8.2.dockerfile)
 - [`0.10.1`, `0.10.1-apache`](https://github.com/yedoma-labs/baikal-docker/blob/0.10.1+hafix/apache.dockerfile)
 - [`0.10.1-apache-php8.2`, `0.10.1-php8.2`](https://github.com/yedoma-labs/baikal-docker/blob/0.10.1+hafix/apache-php8.2.dockerfile)
 - [`0.10.1-nginx`](https://github.com/yedoma-labs/baikal-docker/blob/0.10.1+hafix/nginx.dockerfile)
