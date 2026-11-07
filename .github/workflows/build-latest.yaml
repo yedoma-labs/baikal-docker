@@ -29,6 +29,8 @@ jobs:
     steps:
       - name: Parse release tag
         id: parse-release-tag
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           if [ "${{ github.event_name }}" == "release" ]
           then
@@ -38,7 +40,11 @@ jobs:
           else
             # Get the latest release version from the GitHub API
             echo Parsing tag from latest release ref $REF_NAME
-            REF_NAME=$(curl -s https://api.github.com/repos/${{ github.repository }}/releases/latest | jq -r '.tag_name')
+            REF_NAME=$(gh release view --repo ${{ github.repository }} --json tagName --jq .tagName)
+            if [ -z "$REF_NAME" ]; then
+              echo "::error::Could not determine the latest release"
+              exit 1
+            fi
           fi
 
           BAIKAL_VERSION=${REF_NAME/+*/}
