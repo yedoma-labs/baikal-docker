@@ -34,8 +34,8 @@ COPY files/docker-entrypoint.d/*.sh files/docker-entrypoint.d/*.php files/docker
 COPY --from=builder --chown=nginx:nginx baikal /var/www/baikal
 COPY files/nginx.conf /etc/nginx/conf.d/default.conf
 
-RUN mkdir /etc/nginx/ssl
-RUN openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -subj "/C=/ST=/L=/O=/CN=" -keyout /etc/nginx/ssl/nginx.key -out /etc/nginx/ssl/nginx.crt
+RUN mkdir /etc/nginx/ssl \
+  && sed -i 's/^expose_php = On/expose_php = Off/' /etc/php/8.4/fpm/php.ini
 
 VOLUME /var/www/baikal/config
 VOLUME /var/www/baikal/Specific
