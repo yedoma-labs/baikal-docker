@@ -2,7 +2,7 @@
 
 ⚠️ **Forked to get updates faster!** ⚠️
 
-[![Latest images](https://github.com/yedoma-labs/baikal-docker/actions/workflows/build-latest.yaml/badge.svg)](https://github.com/yedoma-labs/baikal-docker/actions/workflows/build-latest.yaml) [![Experimental images](https://github.com/yedoma-labs/baikal-docker/actions/workflows/build-experimental.yaml/badge.svg)](https://github.com/yedoma-labs/baikal-docker/actions/workflows/build-experimental.yaml) ![Docker Pulls](https://img.shields.io/docker/pulls/bwiedmann/baikal) ![Docker Architectures](https://img.shields.io/badge/arch-amd64%20%7C%20arm32v7%20%7C%20arm64v8%20%7C%20i386-informational)
+[![Latest images](https://github.com/yedoma-labs/baikal-docker/actions/workflows/build-latest.yaml/badge.svg)](https://github.com/yedoma-labs/baikal-docker/actions/workflows/build-latest.yaml) [![Experimental images](https://github.com/yedoma-labs/baikal-docker/actions/workflows/build-experimental.yaml/badge.svg)](https://github.com/yedoma-labs/baikal-docker/actions/workflows/build-experimental.yaml) ![Docker Pulls](https://img.shields.io/docker/pulls/yedomalabs/baikal) ![Docker Architectures](https://img.shields.io/badge/arch-amd64%20%7C%20arm32v7%20%7C%20arm64v8%20%7C%20i386-informational)
 
 This dockerfile provides a ready-to-go [Baikal server](http://sabre.io/baikal/).
 
@@ -38,7 +38,7 @@ The following tags support multiple architectures, e.g. `amd64`, `arm32v7`, `arm
 - [`0.9.5-nginx`](https://github.com/yedoma-labs/baikal-docker/blob/0.9.5/nginx.dockerfile)
 - [`0.9.5-nginx-php8.2`](https://github.com/yedoma-labs/baikal-docker/blob/0.9.5/nginx-php8.2.dockerfile)
 
-For earlier versions all the way back to version 0.2.7, please search in the [tags](https://hub.docker.com/r/bwiedmann/baikal/tags) tab. Version 0.4.5 and older are only available for `amd64`. Version 0.9.0 and older do not support `i386`.
+For earlier versions all the way back to version 0.2.7, please search in the [tags](https://hub.docker.com/r/yedomalabs/baikal/tags) tab. Version 0.4.5 and older are only available for `amd64`. Version 0.9.0 and older do not support `i386`.
 
 ## Quick reference
 
@@ -66,7 +66,7 @@ From [sabre.io/baikal](http://sabre.io/baikal/):
 The following command will start Baikal:
 
 ```bash
-docker run --rm -it -p 80:80 bwiedmann/baikal:nginx
+docker run --rm -it -p 80:80 yedomalabs/baikal:nginx
 ```
 
 Alternatively, use the provided [examples/docker-compose.yaml](https://github.com/yedoma-labs/baikal-docker/blob/master/examples/docker-compose.yaml) from the Git repository:
@@ -121,9 +121,9 @@ You can find more installation and configuration guides here:
 
 ## Image Variants
 
-The `bwiedmann/baikal` images come in several flavors, each designed for a specific use case.
+The `yedomalabs/baikal` images come in several flavors, each designed for a specific use case.
 
-### `bwiedmann/baikal:<version>`
+### `yedomalabs/baikal:<version>`
 
 This is the defacto image and follows the official guidelines the closest using Apache httpd.
 
@@ -131,7 +131,7 @@ With that being said, it's worth checking out the `nginx` variant as it requires
 
 If you are unsure about what your needs are, you probably want to use this one though.
 
-### `bwiedmann/baikal:apache`
+### `yedomalabs/baikal:apache`
 
 This image relies on Apache httpd and uses the [official PHP image](https://hub.docker.com/_/php/) that's packaged with the Apache web server.
 
@@ -143,11 +143,11 @@ The `BAIKAL_SERVERNAME` environment variable is used to set the global `ServerNa
 
 The `BAIKAL_SERVERALIAS` environment variable is used to set the `ServerAlias` directive of the `VirtualHost`s, e.g. `dav.example.org dav.example.com`. For more details, see [Apache Core Features: ServerAlias Directive](https://httpd.apache.org/docs/2.4/mod/core.html#serveralias).
 
-### `bwiedmann/baikal:experimental`
+### `yedomalabs/baikal:experimental`
 
 This image has the latest code from the source repository [yedoma-labs/baikal-docker](https://github.com/yedoma-labs/baikal-docker), mainly used for testing before a version is released. Use this at your own risk.
 
-### `bwiedmann/baikal:nginx`
+### `yedomalabs/baikal:nginx`
 
 This image relies on [nginx](https://www.nginx.com/) and uses the [official nginx image](https://hub.docker.com/_/nginx/).
 
@@ -165,7 +165,7 @@ When switching from the Apache image to the Nginx image (or vice versa), be awar
 If you encounter "DB file is not writable" errors after switching images, the database directory needs proper ownership. Add the environment variable `BAIKAL_ENABLE_CHOWN=true` to your container to automatically fix permissions on startup:
 
 ```bash
-docker run --rm -it -p 80:80 -e BAIKAL_ENABLE_CHOWN=true bwiedmann/baikal:nginx
+docker run --rm -it -p 80:80 -e BAIKAL_ENABLE_CHOWN=true yedomalabs/baikal:nginx
 ```
 
 Or in your `docker-compose.yml`:

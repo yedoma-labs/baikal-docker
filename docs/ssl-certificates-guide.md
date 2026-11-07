@@ -22,7 +22,7 @@ Alternatively, if you're using the `apache` image variant, you can also mount yo
 
 ```bash
 # The folder /etc/ssl/private/baikal contains the files baikal.public.pem and baikal.private.pem
-docker run --rm -it -p 80:80 -p 443:443 -v /etc/ssl/private/baikal:/etc/ssl/private/:ro bwiedmann/baikal:apache
+docker run --rm -it -p 80:80 -p 443:443 -v /etc/ssl/private/baikal:/etc/ssl/private/:ro yedomalabs/baikal:apache
 ```
 
 I also included the Docker Compose template [examples/docker-compose.apache.yaml](https://github.com/yedoma-labs/baikal-docker/blob/master/examples/docker-compose.apache.yaml) for this scenario.
@@ -31,5 +31,5 @@ If you're using the `nginx` variant and would like to mount your certificates, y
 
 ```bash
 # The folder /etc/nginx/ssl contains the files nginx.crt and nginx.key
-docker run --rm -it -p 80:80 -p 443:443 -v /etc/ssl/private/baikal:/etc/nginx/ssl/:ro bwiedmann/baikal:nginx
+docker run --rm -it -p 80:80 -p 443:443 -v /etc/ssl/private/baikal:/etc/nginx/ssl/:ro yedomalabs/baikal:nginx
 ```
