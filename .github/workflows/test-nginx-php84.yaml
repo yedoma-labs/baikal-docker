@@ -29,10 +29,11 @@ jobs:
       - name: Start Nginx and PHP-FPM
         run: |
           docker run -d --name baikal-php84 -p 127.0.0.1:8080:80 baikal-php84
-          docker exec baikal-php84 nginx -t
+          # Wait until the entrypoint has finished (it generates the certificate)
           curl --fail --location --retry 10 --retry-all-errors --retry-delay 2 \
             http://127.0.0.1:8080/ -o /tmp/baikal.html
           grep -q 'Baïkal initialization wizard' /tmp/baikal.html
+          docker exec baikal-php84 nginx -t
       - name: Container logs
         if: always()
         run: docker logs baikal-php84
