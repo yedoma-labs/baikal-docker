@@ -26,6 +26,15 @@ def safe_merge_abort():
     except RuntimeError:
         pass
 
+def is_already_included(ref):
+    """True if `ref` is already an ancestor of HEAD (merging it would be a no-op)."""
+    res = subprocess.run(
+        ["git", "merge-base", "--is-ancestor", ref, "HEAD"],
+        capture_output=True,
+        text=True,
+    )
+    return res.returncode == 0
+
 def main():
     print("=== Starting Merge Script ===")
     
@@ -85,9 +94,14 @@ def main():
     print(f"Found {len(remote_branches)} remote branches to merge.")
     
     merged_branches = []
+    skipped_branches = []
     failed_branches = []
 
     for rb in remote_branches:
+        if is_already_included(rb):
+            print(f"Already included: {rb} (nothing to merge)")
+            skipped_branches.append(rb)
+            continue
         print(f"Merging {rb} into main...")
         try:
             run_cmd(["git", "merge", rb, "--no-edit"])
@@ -111,6 +125,7 @@ def main():
     print(f"Found {len(prs)} open PRs to merge.")
     
     merged_prs = []
+    skipped_prs = []
     failed_prs = []
 
     for pr in prs:
@@ -120,6 +135,10 @@ def main():
         try:
             # Fetch the PR head commit directly from the base repo
             run_cmd(["git", "fetch", "https://github.com/ckulka/baikal-docker.git", f"pull/{pr_num}/head"])
+            if is_already_included("FETCH_HEAD"):
+                print(f"Already included: PR #{pr_num} (nothing to merge)")
+                skipped_prs.append((pr_num, pr_title))
+                continue
             # Merge FETCH_HEAD
             run_cmd(["git", "merge", "FETCH_HEAD", "--no-edit", "-m", f"Merge PR #{pr_num}: {pr_title}"])
             print(f"Successfully merged PR #{pr_num}")
@@ -135,6 +154,9 @@ def main():
     print(f"Successfully merged branches ({len(merged_branches)}):")
     for mb in merged_branches:
         print(f" - {mb}")
+    print(f"Already included branches ({len(skipped_branches)}):")
+    for sb in skipped_branches:
+        print(f" - {sb}")
     print(f"Failed to merge branches ({len(failed_branches)}):")
     for fb, err in failed_branches:
         print(f" - {fb} (Conflict/Error)")
@@ -142,6 +164,9 @@ def main():
     print(f"\nSuccessfully merged PRs ({len(merged_prs)}):")
     for mp in merged_prs:
         print(f" - PR #{mp}")
+    print(f"Already included PRs ({len(skipped_prs)}):")
+    for sp_num, sp_title in skipped_prs:
+        print(f" - PR #{sp_num}: {sp_title}")
     print(f"Failed to merge PRs ({len(failed_prs)}):")
     for fp_num, fp_title, err in failed_prs:
         print(f" - PR #{fp_num}: {fp_title} (Conflict/Error)")
