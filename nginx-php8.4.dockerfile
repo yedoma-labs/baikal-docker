@@ -1,7 +1,7 @@
 # Multi-stage build with the Baikal release's bundled dependencies.
 FROM alpine AS builder
 
-ENV VERSION=0.13.0
+ARG VERSION=0.13.0
 
 ADD https://github.com/sabre-io/Baikal/releases/download/$VERSION/baikal-$VERSION.zip .
 RUN apk add --no-cache unzip && unzip -q baikal-$VERSION.zip

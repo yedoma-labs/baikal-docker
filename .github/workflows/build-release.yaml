@@ -70,3 +70,13 @@ jobs:
       image-version: ${{ needs.parse_release_tag.outputs.baikal-version }}
       tags: yedomalabs/baikal:${{ needs.parse_release_tag.outputs.baikal-version }}-nginx-php8.2
     secrets: inherit
+
+  nginx_php84:
+    name: Nginx (PHP 8.4)
+    needs: parse_release_tag
+    uses: ./.github/workflows/build-job.yaml
+    with:
+      dockerfile: nginx-php8.4.dockerfile
+      image-version: ${{ needs.parse_release_tag.outputs.baikal-version }}
+      tags: yedomalabs/baikal:${{ needs.parse_release_tag.outputs.baikal-version }}-nginx-php8.4
+    secrets: inherit
