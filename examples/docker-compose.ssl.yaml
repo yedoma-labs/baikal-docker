@@ -9,7 +9,7 @@
 
 services:
   baikal:
-    image: bwiedmann/baikal:nginx
+    image: yedomalabs/baikal:nginx
     restart: always
     labels:
       traefik.enable: true

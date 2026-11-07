@@ -13,6 +13,9 @@ concurrency:
   group: build-release-images
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   parse_release_tag:
     runs-on: ubuntu-latest
@@ -32,8 +35,8 @@ jobs:
       dockerfile: apache.dockerfile
       image-version: ${{ needs.parse_release_tag.outputs.baikal-version }}
       tags: |
-        bwiedmann/baikal:${{ needs.parse_release_tag.outputs.baikal-version }}-apache
-        bwiedmann/baikal:${{ needs.parse_release_tag.outputs.baikal-version }}
+        yedomalabs/baikal:${{ needs.parse_release_tag.outputs.baikal-version }}-apache
+        yedomalabs/baikal:${{ needs.parse_release_tag.outputs.baikal-version }}
     secrets: inherit
 
   apache_php82:
@@ -44,8 +47,8 @@ jobs:
       dockerfile: apache-php8.2.dockerfile
       image-version: ${{ needs.parse_release_tag.outputs.baikal-version }}
       tags: |
-        bwiedmann/baikal:${{ needs.parse_release_tag.outputs.baikal-version }}-apache-php8.2
-        bwiedmann/baikal:${{ needs.parse_release_tag.outputs.baikal-version }}-php8.2
+        yedomalabs/baikal:${{ needs.parse_release_tag.outputs.baikal-version }}-apache-php8.2
+        yedomalabs/baikal:${{ needs.parse_release_tag.outputs.baikal-version }}-php8.2
     secrets: inherit
 
   nginx:
@@ -55,7 +58,7 @@ jobs:
     with:
       dockerfile: nginx.dockerfile
       image-version: ${{ needs.parse_release_tag.outputs.baikal-version }}
-      tags: bwiedmann/baikal:${{ needs.parse_release_tag.outputs.baikal-version }}-nginx
+      tags: yedomalabs/baikal:${{ needs.parse_release_tag.outputs.baikal-version }}-nginx
     secrets: inherit
 
   nginx_php82:
@@ -65,5 +68,5 @@ jobs:
     with:
       dockerfile: nginx-php8.2.dockerfile
       image-version: ${{ needs.parse_release_tag.outputs.baikal-version }}
-      tags: bwiedmann/baikal:${{ needs.parse_release_tag.outputs.baikal-version }}-nginx-php8.2
+      tags: yedomalabs/baikal:${{ needs.parse_release_tag.outputs.baikal-version }}-nginx-php8.2
     secrets: inherit

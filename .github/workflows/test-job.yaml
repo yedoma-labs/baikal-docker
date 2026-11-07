@@ -12,6 +12,9 @@ on:
         default: ${{ github.ref }}
         type: string
 
+permissions:
+  contents: read
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -32,13 +35,14 @@ jobs:
           ref: ${{ inputs.ref }}
           show-progress: false
 
-      - uses: actions/setup-node@v4
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
         with:
           node-version-file: package.json
-          cache: npm
 
       - name: Install Cypress dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Build Docker image
         id: build
@@ -52,10 +56,17 @@ jobs:
       - name: Start Baikal container
         run: docker run --rm -dp 80:80 --name ${{ inputs.dockerfile }} baikal-image
 
+      - name: Wait for Baikal to respond
+        run: curl --silent --show-error --fail --retry 30 --retry-all-errors --retry-delay 1 -o /dev/null http://localhost/
+
       - name: Run Cypress tests
-        run: npm run test
+        run: pnpm run test
         env:
           CYPRESS_BAIKAL_VERSION: ${{ steps.parse-release-tag.outputs.BAIKAL_VERSION }}
+
+      - name: Show Baikal container logs on failure
+        if: failure()
+        run: docker logs ${{ inputs.dockerfile }} 2>&1 || true
 
       - name: Assert Home Assistant fix is not applied by default
         run: |
@@ -108,7 +119,7 @@ jobs:
           docker cp ${{ github.workspace }}/cypress/fixtures/mail-test.php baikal:/var/www/baikal/html/
 
       - name: Run Cypress tests incl. MSMTP
-        run: npm run test
+        run: pnpm run test
         env:
           CYPRESS_MSMTP_ENABLED: TRUE
           CYPRESS_BAIKAL_VERSION: ${{ steps.parse-release-tag.outputs.BAIKAL_VERSION }}

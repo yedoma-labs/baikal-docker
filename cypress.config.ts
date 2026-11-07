@@ -1,6 +1,10 @@
 import { defineConfig } from "cypress";
 
 const config = {
+  // Non-sensitive values readable in specs via Cypress.expose(key)
+  expose: {
+    BAIKAL_VERSION: process.env.CYPRESS_BAIKAL_VERSION,
+  },
   e2e: {
     supportFile: false,
     screenshotsFolder: "cypress/screenshots",

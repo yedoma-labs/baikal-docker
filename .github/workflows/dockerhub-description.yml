@@ -10,6 +10,9 @@ concurrency:
   group: dockerhub-description
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -23,5 +26,5 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          repository: bwiedmann/baikal
+          repository: yedomalabs/baikal
           short-description: ${{ github.event.repository.description }}

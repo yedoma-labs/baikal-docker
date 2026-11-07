@@ -23,6 +23,9 @@ concurrency:
   cancel-in-progress: true
 
 # Run the automated tests first, then publish the images if the tests pass
+permissions:
+  contents: read
+
 jobs:
   test:
     name: ${{ matrix.dockerfile }}
@@ -46,8 +49,8 @@ jobs:
       dockerfile: apache.dockerfile
       image-version: experimental
       tags: |
-        bwiedmann/baikal:experimental-apache
-        bwiedmann/baikal:experimental
+        yedomalabs/baikal:experimental-apache
+        yedomalabs/baikal:experimental
     secrets: inherit
 
   apache_php82:
@@ -58,8 +61,8 @@ jobs:
       dockerfile: apache-php8.2.dockerfile
       image-version: experimental
       tags: |
-        bwiedmann/baikal:experimental-apache-php8.2
-        bwiedmann/baikal:experimental-php8.2
+        yedomalabs/baikal:experimental-apache-php8.2
+        yedomalabs/baikal:experimental-php8.2
     secrets: inherit
 
   nginx:
@@ -69,7 +72,7 @@ jobs:
     with:
       dockerfile: nginx.dockerfile
       image-version: experimental
-      tags: bwiedmann/baikal:experimental-nginx
+      tags: yedomalabs/baikal:experimental-nginx
     secrets: inherit
 
   nginx_php82:
@@ -79,5 +82,5 @@ jobs:
     with:
       dockerfile: nginx-php8.2.dockerfile
       image-version: experimental
-      tags: bwiedmann/baikal:experimental-nginx-php8.2
+      tags: yedomalabs/baikal:experimental-nginx-php8.2
     secrets: inherit

@@ -1,9 +1,9 @@
 # Docker Compose file for a Baikal server
-# See https://github.com/bwiedmann/baikal-docker/blob/master/docs/email-guide.md
+# See https://github.com/yedoma-labs/baikal-docker/blob/master/docs/email-guide.md
 
 services:
   baikal:
-    image: bwiedmann/baikal:nginx
+    image: yedomalabs/baikal:nginx
     restart: always
     environment:
       MSMTPRC: |

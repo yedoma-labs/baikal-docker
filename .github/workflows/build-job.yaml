@@ -30,6 +30,9 @@ on:
         description: DockerHub password
         required: true
 
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -66,9 +69,9 @@ jobs:
           # TODO github.event.created_at does not seem to work
           labels: |
             org.opencontainers.image.created=${{ github.event.created_at }}
-            org.opencontainers.image.url=https://hub.docker.com/r/bwiedmann/baikal
-            org.opencontainers.image.documentation=https://github.com/bwiedmann/baikal-docker
-            org.opencontainers.image.source=https://github.com/bwiedmann/baikal-docker
+            org.opencontainers.image.url=https://hub.docker.com/r/yedomalabs/baikal
+            org.opencontainers.image.documentation=https://github.com/yedoma-labs/baikal-docker
+            org.opencontainers.image.source=https://github.com/yedoma-labs/baikal-docker
             org.opencontainers.image.version=${{ inputs.image-version }}
             org.opencontainers.image.revision=${{ inputs.image-revision }}
             org.opencontainers.image.licenses=MIT
