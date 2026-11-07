@@ -54,12 +54,19 @@ jobs:
           .
 
       - name: Start Baikal container
-        run: docker run --rm -dp 80:80 --name ${{ inputs.dockerfile }} baikal-image
+        run: docker run -dp 80:80 --name ${{ inputs.dockerfile }} baikal-image
 
       - name: Run Cypress tests
         run: pnpm run test
         env:
           CYPRESS_BAIKAL_VERSION: ${{ steps.parse-release-tag.outputs.BAIKAL_VERSION }}
+
+      - name: Show Baikal container state and logs
+        if: always()
+        run: |
+          docker ps -a --filter "name=${{ inputs.dockerfile }}"
+          docker logs ${{ inputs.dockerfile }} 2>&1 || true
+          docker rm -f ${{ inputs.dockerfile }} || true
 
       - name: Assert Home Assistant fix is not applied by default
         run: |
