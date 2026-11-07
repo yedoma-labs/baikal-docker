@@ -22,9 +22,15 @@ jobs:
       # Get the latest release version from the GitHub API
       - name: Parse release tag
         id: parse-release-tag
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          echo Parsing tag from latest release ref $REF_NAME
-          REF_NAME=$(curl -s https://api.github.com/repos/${{ github.repository }}/releases/latest | jq -r '.tag_name')
+          echo Parsing tag from latest release
+          REF_NAME=$(gh release view --repo ${{ github.repository }} --json tagName --jq .tagName)
+          if [ -z "$REF_NAME" ]; then
+            echo "::error::Could not determine the latest release"
+            exit 1
+          fi
           echo Latest release ref is $REF_NAME
           BAIKAL_VERSION=${REF_NAME/+*/}
           echo Parsed Baikal version $BAIKAL_VERSION from release $REF_NAME
